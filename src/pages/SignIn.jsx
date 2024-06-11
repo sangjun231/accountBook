@@ -61,7 +61,9 @@ export default function SignIn({ setUser }) {
       id,
       password,
     });
+    alert("로그인이 되었습니다.");
     setUser({ userId, nickname, avatar });
+    navigate("/");
   };
 
   return (
