@@ -51,14 +51,17 @@ const ToggleButton = styled.button`
   cursor: pointer;
 `;
 
-export default function SignIn() {
+export default function SignIn({ setUser }) {
   const [id, setId] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
   const handleSignIn = async () => {
-    const response = await login({ id, password });
-    console.log("login : ", response);
+    const { userId, nickname, avatar } = await login({
+      id,
+      password,
+    });
+    setUser({ userId, nickname, avatar });
   };
 
   return (
