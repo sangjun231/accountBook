@@ -86,7 +86,7 @@ export default function ExpenseList() {
           >
             <ExpenseDetails>
               <span>{expense.date}</span>
-              <span>{`${expense.item} - ${expense.description}`}</span>
+              <span>{`${expense.item} - ${expense.description} (${expense.createdBy})`}</span>
             </ExpenseDetails>
             <span>{expense.amount.toLocaleString()} 원</span>
           </ExpenseItem>

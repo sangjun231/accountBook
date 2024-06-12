@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { postExpense } from "../lib/api/expense";
-import { QueryClient, useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 
 const InputRow = styled.div`
@@ -55,9 +55,8 @@ export default function CreateExpense({ user, month }) {
   const [newItem, setNewItem] = useState("");
   const [newAmount, setNewAmount] = useState("");
   const [newDescription, setNewDescription] = useState("");
-  const queryClient = new QueryClient();
   const navigate = useNavigate();
-
+  const queryClient = useQueryClient();
   const mutation = useMutation({
     mutationFn: postExpense,
     onSuccess: () => {
@@ -103,7 +102,7 @@ export default function CreateExpense({ user, month }) {
         <InputGroupInline>
           <label htmlFor="date">날짜</label>
           <input
-            type="text"
+            type="date"
             id="date"
             value={newDate}
             onChange={(e) => setNewDate(e.target.value)}

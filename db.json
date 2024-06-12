@@ -37,48 +37,26 @@
       "createdBy": "Rosie"
     },
     {
-      "id": "b82b213e-8164-4c89-94b0-7246cdcfc4f9",
-      "month": 1,
       "date": "2024-01-21",
-      "item": "식비",
+      "item": "식비123",
       "amount": 412000,
       "description": "BBQ",
-      "createdBy": "Me"
+      "id": "b82b213e-8164-4c89-94b0-7246cdcfc4f9"
     },
     {
-      "id": "d180194f-7c27-428a-8cd9-ad9114e58821",
-      "month": 1,
-      "date": "2024-01-22",
-      "item": "도서",
-      "amount": 23000,
-      "description": "리액트 마스터",
-      "createdBy": "Me"
-    },
-    {
-      "id": "0abf06c3-8f0e-4ea1-9691-7facab0a91cb",
-      "month": 1,
       "date": "2024-01-30",
       "item": "외식",
-      "amount": 100000,
+      "amount": 1000000,
       "description": "세광양대창",
-      "createdBy": "Me"
+      "id": "0abf06c3-8f0e-4ea1-9691-7facab0a91cb"
     },
     {
-      "id": "fa7025cc-cc49-4da6-ba55-2450419a8ea0",
+      "id": "2bb67c7d-4723-43ac-ab58-820c32c8ed1b",
       "month": 1,
-      "date": "2024-01-31",
-      "item": "휴가",
-      "amount": 300000,
-      "description": "내일배움캠프휴가",
-      "createdBy": "dev9999"
-    },
-    {
-      "id": "7a5de1fa-1249-424e-bb3a-9cd2cfa2fc6c",
-      "month": 1,
-      "date": "2024-01-15",
-      "item": "도서",
-      "amount": 20000,
-      "description": "해리포터",
+      "date": "2024-01-01",
+      "item": "123",
+      "amount": 222,
+      "description": "5655",
       "createdBy": "dev9999"
     }
   ]

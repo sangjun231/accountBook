@@ -9,7 +9,6 @@ import Layout from "./components/Layout";
 import Profile from "./pages/profile";
 
 function App() {
-  const [expenses, setExpenses] = useState([]);
   const [user, setUser] = useState(null);
 
   return (
@@ -17,20 +16,8 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Layout user={user} setUser={setUser} />}>
-            <Route
-              index
-              element={
-                <Home
-                  user={user}
-                  expenses={expenses}
-                  setExpenses={setExpenses}
-                />
-              }
-            />
-            <Route
-              path="/detail/:id"
-              element={<Detail expenses={expenses} setExpenses={setExpenses} />}
-            />
+            <Route index element={<Home user={user} />} />
+            <Route path="/detail/:id" element={<Detail />} />
             <Route
               path="/profile"
               element={<Profile user={user} setUser={setUser} />}
