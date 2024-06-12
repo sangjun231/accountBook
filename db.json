@@ -62,6 +62,24 @@
       "amount": 100000,
       "description": "세광양대창",
       "createdBy": "Me"
+    },
+    {
+      "id": "fa7025cc-cc49-4da6-ba55-2450419a8ea0",
+      "month": 1,
+      "date": "2024-01-31",
+      "item": "휴가",
+      "amount": 300000,
+      "description": "내일배움캠프휴가",
+      "createdBy": "dev9999"
+    },
+    {
+      "id": "7a5de1fa-1249-424e-bb3a-9cd2cfa2fc6c",
+      "month": 1,
+      "date": "2024-01-15",
+      "item": "도서",
+      "amount": 20000,
+      "description": "해리포터",
+      "createdBy": "dev9999"
     }
   ]
 }
