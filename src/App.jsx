@@ -70,8 +70,6 @@ function App() {
   ]);
   const [user, setUser] = useState(null);
 
-  console.log("login ", user);
-
   return (
     <>
       <BrowserRouter>
