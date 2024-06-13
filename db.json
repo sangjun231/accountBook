@@ -1,12 +1,12 @@
 {
   "expenses": [
     {
-      "id": "01b63353-7a93-418f-951a-cbd856841019",
       "date": "2024-01-01",
       "item": "다시시작",
       "amount": 10000,
       "description": "해봅시다",
-      "createdBy": "dev9999"
+      "createdBy": "dev9999",
+      "id": "01b63353-7a93-418f-951a-cbd856841019"
     }
   ]
 }

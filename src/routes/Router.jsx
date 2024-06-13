@@ -5,18 +5,32 @@ import SignIn from "../pages/SignIn";
 import SignUp from "../pages/SignUp";
 import Layout from "../components/Layout";
 import Profile from "../pages/Profile";
+import PrivateRoute from "./PrivateRoute";
+import PublicRoute from "./PublicRoute";
 
 const Router = () => {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Layout />}>
-          <Route index element={<Home />} />
-          <Route path="/detail/:id" element={<Detail />} />
-          <Route path="/profile" element={<Profile />} />
+          <Route index element={<PrivateRoute element={<Home />} />} />
+          <Route
+            path="/detail/:id"
+            element={<PrivateRoute element={<Detail />} />}
+          />
+          <Route
+            path="/profile"
+            element={<PrivateRoute element={<Profile />} />}
+          />
+          <Route
+            path="/sign_in"
+            element={<PublicRoute element={<SignIn />} />}
+          />
+          <Route
+            path="/sign_up"
+            element={<PublicRoute element={<SignUp />} />}
+          />
         </Route>
-        <Route path="/sign_in" element={<SignIn />} />
-        <Route path="/sign_up" element={<SignUp />} />
       </Routes>
     </BrowserRouter>
   );

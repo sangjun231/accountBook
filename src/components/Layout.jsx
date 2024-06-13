@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { getUserInfo } from "../lib/api/auth";
@@ -70,6 +70,7 @@ const PageContainer = styled.div`
 
 export default function Layout() {
   const { user, setUser } = userStore();
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -80,18 +81,35 @@ export default function Layout() {
   };
 
   useEffect(() => {
-    getUserInfo().then((res) => {
-      if (res) {
-        setUser({
-          userId: res.id,
-          nickname: res.nickname,
-          avatar: res.avatar,
+    const token = localStorage.getItem("accessToken");
+    if (token) {
+      getUserInfo(token)
+        .then((userInfo) => {
+          if (userInfo) {
+            setUser({
+              userId: userInfo.id,
+              nickname: userInfo.nickname,
+              avatar: userInfo.avatar,
+            });
+          } else {
+            handleLogout();
+          }
+        })
+        .catch((error) => {
+          toast.error("Error fetching user info:", error);
+          handleLogout();
+        })
+        .finally(() => {
+          setLoading(false);
         });
-      } else {
-        handleLogout();
-      }
-    });
+    } else {
+      setLoading(false);
+    }
   }, []);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <>
