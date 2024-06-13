@@ -3,6 +3,8 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { getExpenses } from "../lib/api/expense";
+import userStore from "./../zustand/userStore";
+import { toast } from "react-toastify";
 
 const ExpenseItemList = styled.div`
   display: flex;
@@ -64,6 +66,7 @@ const ExpenseDetails = styled.div`
 
 export default function ExpenseList() {
   const navigate = useNavigate();
+  const { user, selectedMonth } = userStore();
 
   const {
     data: expenses = [],
@@ -74,14 +77,26 @@ export default function ExpenseList() {
     queryFn: getExpenses,
   });
 
+  const filteredExpenses = expenses.filter(
+    (expense) => new Date(expense.date).getMonth() + 1 === selectedMonth
+  );
+
+  const handleItemClick = (expense) => {
+    if (expense.createdBy !== user.userId) {
+      toast.error("본인의 지출만 수정 할 수 있습니다.");
+    } else {
+      navigate(`/detail/${expense.id}`);
+    }
+  };
+
   return (
     <Section>
       <ExpenseItemList>
-        {expenses.map((expense) => (
+        {filteredExpenses.map((expense) => (
           <ExpenseItem
             key={expense.id}
             onClick={() => {
-              navigate(`/detail/${expense.id}`);
+              handleItemClick(expense);
             }}
           >
             <ExpenseDetails>

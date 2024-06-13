@@ -2,6 +2,8 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { login } from "../lib/api/auth";
+import userStore from "../zustand/userStore";
+import { toast } from "react-toastify";
 
 const Container = styled.div`
   max-width: 400px;
@@ -51,9 +53,10 @@ const ToggleButton = styled.button`
   cursor: pointer;
 `;
 
-export default function SignIn({ setUser }) {
+export default function SignIn() {
   const [id, setId] = useState("");
   const [password, setPassword] = useState("");
+  const { setUser } = userStore();
   const navigate = useNavigate();
 
   const handleSignIn = async () => {
@@ -61,7 +64,7 @@ export default function SignIn({ setUser }) {
       id,
       password,
     });
-    alert("로그인이 되었습니다.");
+    toast.success("로그인이 완료되었습니다.");
     setUser({ userId, nickname, avatar });
     navigate("/");
   };

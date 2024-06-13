@@ -2,6 +2,8 @@ import { useEffect } from "react";
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { getUserInfo } from "../lib/api/auth";
+import userStore from "../zustand/userStore";
+import { toast } from "react-toastify";
 
 const Navbar = styled.nav`
   background-color: #333;
@@ -66,10 +68,12 @@ const PageContainer = styled.div`
   padding: 6rem 2rem;
 `;
 
-export default function Layout({ user, setUser }) {
+export default function Layout() {
+  const { user, setUser } = userStore();
   const navigate = useNavigate();
 
   const handleLogout = () => {
+    toast.success("로그아웃 되었습니다.");
     setUser(null);
     navigate("/sign_in");
     localStorage.clear();

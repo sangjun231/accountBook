@@ -1,10 +1,11 @@
 import { Section } from "../pages/Home";
 import styled from "styled-components";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { postExpense } from "../lib/api/expense";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useNavigate } from "react-router-dom";
+import userStore from "../zustand/userStore";
+import { toast } from "react-toastify";
 
 const InputRow = styled.div`
   display: flex;
@@ -48,39 +49,32 @@ const AddButton = styled.button`
   }
 `;
 
-export default function CreateExpense({ user, month }) {
-  const [newDate, setNewDate] = useState(
-    `2024-${String(month).padStart(2, "0")}-01`
-  );
+export default function CreateExpense() {
+  const [newDate, setNewDate] = useState("");
   const [newItem, setNewItem] = useState("");
   const [newAmount, setNewAmount] = useState("");
   const [newDescription, setNewDescription] = useState("");
-  const navigate = useNavigate();
+  const { user, selectedMonth } = userStore();
   const queryClient = useQueryClient();
+
   const mutation = useMutation({
     mutationFn: postExpense,
     onSuccess: () => {
       queryClient.invalidateQueries(["expenses"]);
-      navigate(0);
     },
   });
 
-  const handleAddExpense = () => {
-    const datePattern = /^\d{4}-\d{2}-\d{2}$/;
-    if (!datePattern.test(newDate)) {
-      alert("날짜를 YYYY-MM-DD 형식으로 입력해주세요.");
-      return;
-    }
+  const handleAddExpense = (e) => {
+    e.preventDefault();
 
     const parsedAmount = parseInt(newAmount, 10);
-    if (!newItem || parsedAmount <= 0) {
-      alert("유효한 항목과 금액을 입력해주세요.");
+    if (!newItem || parsedAmount <= 0 || !newDescription) {
+      toast.error("유효한 항목, 금액, 내용을 입력해주세요.");
       return;
     }
 
     const newExpense = {
       id: uuidv4(),
-      month: parseInt(newDate.split("-")[1], 10),
       date: newDate,
       item: newItem,
       amount: parsedAmount,
@@ -90,57 +84,62 @@ export default function CreateExpense({ user, month }) {
 
     mutation.mutate(newExpense);
 
-    setNewDate(`2024-${String(month).padStart(2, "0")}-01`);
+    setNewDate(`2024-${String(selectedMonth).padStart(2, "0")}-01`);
     setNewItem("");
     setNewAmount("");
     setNewDescription("");
   };
 
+  useEffect(() => {
+    setNewDate(`2024-${String(selectedMonth).padStart(2, "0")}-01`);
+  }, [selectedMonth]);
+
   return (
     <Section>
-      <InputRow>
-        <InputGroupInline>
-          <label htmlFor="date">날짜</label>
-          <input
-            type="date"
-            id="date"
-            value={newDate}
-            onChange={(e) => setNewDate(e.target.value)}
-            placeholder="YYYY-MM-DD"
-          />
-        </InputGroupInline>
-        <InputGroupInline>
-          <label htmlFor="item">항목</label>
-          <input
-            type="text"
-            id="item"
-            value={newItem}
-            onChange={(e) => setNewItem(e.target.value)}
-            placeholder="지출 항목"
-          />
-        </InputGroupInline>
-        <InputGroupInline>
-          <label htmlFor="amount">금액</label>
-          <input
-            type="number"
-            id="amount"
-            value={newAmount}
-            onChange={(e) => setNewAmount(e.target.value)}
-            placeholder="지출 금액"
-          />
-        </InputGroupInline>
-        <InputGroupInline>
-          <label htmlFor="description">내용</label>
-          <input
-            type="text"
-            id="description"
-            value={newDescription}
-            onChange={(e) => setNewDescription(e.target.value)}
-            placeholder="지출 내용"
-          />
-        </InputGroupInline>
-        <AddButton onClick={handleAddExpense}>저장</AddButton>
-      </InputRow>
+      <form onSubmit={handleAddExpense}>
+        <InputRow>
+          <InputGroupInline>
+            <label htmlFor="date">날짜</label>
+            <input
+              type="date"
+              id="date"
+              value={newDate}
+              onChange={(e) => setNewDate(e.target.value)}
+            />
+          </InputGroupInline>
+          <InputGroupInline>
+            <label htmlFor="item">항목</label>
+            <input
+              type="text"
+              id="item"
+              value={newItem}
+              onChange={(e) => setNewItem(e.target.value)}
+              placeholder="지출 항목"
+            />
+          </InputGroupInline>
+          <InputGroupInline>
+            <label htmlFor="amount">금액</label>
+            <input
+              type="number"
+              id="amount"
+              value={newAmount}
+              onChange={(e) => setNewAmount(e.target.value)}
+              placeholder="지출 금액"
+            />
+          </InputGroupInline>
+          <InputGroupInline>
+            <label htmlFor="description">내용</label>
+            <input
+              type="text"
+              id="description"
+              value={newDescription}
+              onChange={(e) => setNewDescription(e.target.value)}
+              placeholder="지출 내용"
+            />
+          </InputGroupInline>
+          <AddButton type="submit">저장</AddButton>
+        </InputRow>
+      </form>
     </Section>
   );
 }

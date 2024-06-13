@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { register } from "../lib/api/auth";
+import { toast } from "react-toastify";
 
 const Container = styled.div`
   max-width: 400px;
@@ -59,21 +60,21 @@ export default function SignUp() {
 
   const handleSignIn = async () => {
     if (id.length < 4 || id.length > 10) {
-      alert("아이디는 4글자에서 10글자 이내로 입력해주세요!");
+      toast.error("아이디는 4글자에서 10글자 이내로 입력해주세요!");
       return;
     }
     if (password.length < 4 || password.length > 15) {
-      alert("패스워드는 4글자에서 15글자 이내로 입력해주세요!");
+      toast.error("패스워드는 4글자에서 15글자 이내로 입력해주세요!");
       return;
     }
     if (nickname.length < 1 || nickname > 10) {
-      alert("닉네임은 1글자에서 10글자 이내로 입력해주세요!");
+      toast.error("닉네임은 1글자에서 10글자 이내로 입력해주세요!");
       return;
     }
     const response = await register({ id, password, nickname });
 
     if (response) {
-      alert("회원가입이 완료되었습니다.");
+      toast.success("회원가입이 완료되었습니다.");
       navigate("/sign_in");
     }
   };

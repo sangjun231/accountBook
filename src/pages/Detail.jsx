@@ -3,6 +3,8 @@ import styled from "styled-components";
 import { useNavigate, useParams } from "react-router-dom";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { getExpense, putExpense, deleteExpense } from "../lib/api/expense";
+import userStore from "../zustand/userStore";
+import { toast } from "react-toastify";
 
 const Container = styled.div`
   max-width: 800px;
@@ -75,6 +77,7 @@ export default function Detail() {
   const [item, setItem] = useState("");
   const [amount, setAmount] = useState("");
   const [description, setDescription] = useState("");
+  const { user } = userStore();
   const queryClient = useQueryClient();
 
   const mutationEdit = useMutation({
@@ -96,13 +99,8 @@ export default function Detail() {
   });
 
   const editExpense = () => {
-    const datePattern = /^\d{4}-\d{2}-\d{2}$/;
-    if (!datePattern.test(date)) {
-      alert("날짜를 YYYY-MM-DD 형식으로 입력해주세요.");
-      return;
-    }
-    if (!item || amount <= 0) {
-      alert("유효한 항목과 금액을 입력해주세요.");
+    if (!item || amount <= 0 || !description) {
+      toast.error("유효한 항목, 금액, 내용을 입력해주세요.");
       return;
     }
 
@@ -112,13 +110,16 @@ export default function Detail() {
       item,
       amount: parseInt(amount, 10),
       description,
+      createdBy: user.userId,
     };
 
+    toast.success("수정이 완료되었습니다.");
     mutationEdit.mutate(newExpense);
     navigate("/");
   };
 
   const handleDelete = () => {
+    toast.success("삭제가 완료되었습니다.");
     mutationDelete.mutate(id);
   };
 

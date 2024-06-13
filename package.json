@@ -13,12 +13,15 @@
   "dependencies": {
     "@tanstack/react-query": "^5.44.0",
     "axios": "^1.7.2",
+    "immer": "^10.1.1",
     "json-server": "^1.0.0-beta.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.23.1",
+    "react-toastify": "^10.0.5",
     "styled-components": "^6.1.11",
-    "uuidv4": "^6.2.13"
+    "uuidv4": "^6.2.13",
+    "zustand": "^4.5.2"
   },
   "devDependencies": {
     "@types/react": "^18.2.66",

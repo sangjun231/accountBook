@@ -2,6 +2,7 @@ import { useState } from "react";
 import styled from "styled-components";
 import { updateProfile } from "../lib/api/auth";
 import { useNavigate } from "react-router-dom";
+import userStore from "../zustand/userStore";
 
 const Container = styled.div`
   max-width: 400px;
@@ -37,10 +38,10 @@ const Button = styled.button`
   margin-bottom: 10px;
 `;
 
-export default function Profile({ user, setUser }) {
+export default function Profile() {
   const [nickname, setNickname] = useState("");
   const [avatar, setAvatar] = useState(null);
-
+  const { user, setUser } = userStore();
   const navigate = useNavigate();
 
   const handleUpdateProfile = async () => {
