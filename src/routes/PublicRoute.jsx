@@ -5,6 +5,10 @@ const PublicRoute = ({ element }) => {
   const { user } = userStore();
 
   return !user ? element : <Navigate to="/" />;
+
+  //   const { user } = userStore();
+
+  //   return user ? <Navigate to="/" /> : <Outlet />;
 };
 
 export default PublicRoute;

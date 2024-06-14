@@ -2,13 +2,6 @@ import styled from "styled-components";
 import { Section } from "../pages/Home";
 import userStore from "../zustand/userStore";
 
-const MonthWrapper = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  justify-content: center;
-`;
-
 const MonthButton = styled.button`
   text-align: center;
   font-family: Pretendard, serif;
@@ -49,7 +42,7 @@ export default function MonthNavigation() {
 
   return (
     <Section>
-      <MonthWrapper>
+      <div className="flex flex-wrap gap-4 justify-center">
         {MONTHS.map((element) => {
           return (
             <MonthButton
@@ -61,7 +54,7 @@ export default function MonthNavigation() {
             >{`${element}월`}</MonthButton>
           );
         })}
-      </MonthWrapper>
+      </div>
     </Section>
   );
 }
