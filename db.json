@@ -7,6 +7,14 @@
       "description": "해봅시다",
       "createdBy": "dev9999",
       "id": "01b63353-7a93-418f-951a-cbd856841019"
+    },
+    {
+      "id": "6198f765-d290-4902-b719-b253822cbb5b",
+      "date": "2024-01-01",
+      "item": "test",
+      "amount": 11,
+      "description": "11",
+      "createdBy": "dev9999"
     }
   ]
 }
