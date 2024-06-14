@@ -36,12 +36,12 @@ const Router = () => {
   );
   // <BrowserRouter>
   //   <Routes>
-  //     <Route element={<PrivateRoute />}>
-  //       <Route path="/" element={<Layout />}>
+  //     <Route path="/"  element={<PrivateRoute />}>
+
   //         <Route index element={<Home />} />
   //         <Route path="detail/:id" element={<Detail />} />
   //         <Route path="profile" element={<Profile />} />
-  //       </Route>
+
   //     </Route>
   //     <Route element={<PublicRoute />}>
   //       <Route path="/sign_in" element={<SignIn />} />

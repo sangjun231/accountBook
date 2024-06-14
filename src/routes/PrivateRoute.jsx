@@ -1,14 +1,21 @@
 import { Navigate } from "react-router-dom";
 import userStore from "../zustand/userStore";
+import Layout from "../components/Layout";
 
 const PrivateRoute = ({ element }) => {
   const { user } = userStore();
 
   return user ? element : <Navigate to="/sign_in" />;
 
-  // const { user } = userStore();
+  //   const { user } = userStore();
 
-  // return user ? <Outlet /> : <Navigate to="/sign_in" />;
+  //   return user ? (
+  //     <Layout>
+  //       <Outlet />
+  //     </Layout>
+  //   ) : (
+  //     <Navigate to="/sign_in" />
+  //   );
 };
 
 export default PrivateRoute;

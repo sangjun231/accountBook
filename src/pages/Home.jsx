@@ -18,6 +18,13 @@ export const Section = styled.section`
   padding: 20px;
 `;
 
+// 테일윈드 예시
+// function Container({ children }) {
+//   return <section className="블라블라블라">
+//     {children}
+//   </section>
+// }
+
 export default function Home() {
   return (
     <Container>
