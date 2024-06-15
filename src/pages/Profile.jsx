@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { updateProfile } from "../lib/api/auth";
 import { useNavigate } from "react-router-dom";
 import userStore from "../zustand/userStore";
+import { toast } from "react-toastify";
 
 const Container = styled.div`
   max-width: 400px;
@@ -38,13 +39,27 @@ const Button = styled.button`
   margin-bottom: 10px;
 `;
 
+const ImagePreview = styled.img`
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin-top: 10px;
+`;
+
 export default function Profile() {
   const [nickname, setNickname] = useState("");
   const [avatar, setAvatar] = useState(null);
+  const [avatarPreview, setAvatarPreview] = useState(null);
   const { user, setUser } = userStore();
   const navigate = useNavigate();
 
   const handleUpdateProfile = async () => {
+    if (!nickname || !avatar) {
+      toast.error("닉네임과 아바타를 수정하고 업데이트 해주세요!");
+      return;
+    }
+
     const formData = new FormData();
 
     formData.append("nickname", nickname);
@@ -62,9 +77,16 @@ export default function Profile() {
     }
   };
 
+  const handleAvatarChange = (e) => {
+    const imgFile = e.target.files[0];
+
+    setAvatar(imgFile);
+    setAvatarPreview(URL.createObjectURL(imgFile));
+  };
+
   return (
     <Container>
-      <h2>프로필 수정</h2>
+      <h2 className="mb-4">프로필 수정</h2>
       <InputGroup>
         <label htmlFor="nickname">닉네임</label>
         <input
@@ -77,13 +99,28 @@ export default function Profile() {
       </InputGroup>
       <InputGroup>
         <label htmlFor="avatar">아바타 이미지</label>
-        <input
-          type="file"
-          accept="image/*"
-          onChange={(e) => setAvatar(e.target.files[0])}
-        />
+        <input type="file" accept="image/*" onChange={handleAvatarChange} />
       </InputGroup>
-      <Button onClick={handleUpdateProfile}>프로필 업데이트</Button>
+      <div className="flex gap-20">
+        <Button onClick={handleUpdateProfile}>프로필 업데이트</Button>
+        <Button
+          onClick={() => {
+            navigate("/");
+          }}
+        >
+          돌아가기
+        </Button>
+      </div>
+      <h2 className="text-xl">아바타 미리보기</h2>
+      {avatarPreview && (
+        <img
+          className="
+          w-32 h-32 rounded-full items-center
+          "
+          src={avatarPreview}
+          alt="아바타 미리보기"
+        />
+      )}
     </Container>
   );
 }

@@ -99,7 +99,7 @@ export default function Detail() {
   });
 
   const editExpense = () => {
-    if (!item || amount <= 0 || !description) {
+    if (!item || !amount || !description) {
       toast.error("유효한 항목, 금액, 내용을 입력해주세요.");
       return;
     }

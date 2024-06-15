@@ -1,4 +1,5 @@
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const AUTH_API_HOST = "https://moneyfulpublicpolicy.co.kr";
 
@@ -59,7 +60,7 @@ export const updateProfile = async (formData) => {
       });
       return response.data;
     } catch (error) {
-      alert("업데이트 실패했습니다.");
+      toast.error("업데이트 실패했습니다.");
     }
   }
 };
