@@ -117,13 +117,15 @@ export default function Profile() {
         </Button>
       </div>
       <h2 className="text-xl">아바타 미리보기</h2>
-      {avatarPreview && (
-        <img
-          className="w-32 h-32 rounded-full items-center"
-          src={avatarPreview}
-          alt="아바타 미리보기"
-        />
-      )}
+      <div className="flex justify-center">
+        {avatarPreview && (
+          <img
+            className="w-32 h-32 rounded-full items-center"
+            src={avatarPreview}
+            alt="아바타 미리보기"
+          />
+        )}
+      </div>
     </Container>
   );
 }

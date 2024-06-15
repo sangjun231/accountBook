@@ -23,6 +23,7 @@ export const login = async ({ id, password }) => {
       password,
     });
     localStorage.setItem("accessToken", response.data.accessToken);
+    localStorage.setItem("tokenTime", new Date().toISOString());
     return response.data;
   } catch (error) {
     alert(error?.response?.data?.message);

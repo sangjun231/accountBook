@@ -71,13 +71,26 @@ const PageContainer = styled.div`
 export default function Layout() {
   const { user, setUser } = userStore();
   const [loading, setLoading] = useState(true);
+  const [leftTime, setLeftTime] = useState(null);
   const navigate = useNavigate();
 
   const handleLogout = () => {
     toast.success("로그아웃 되었습니다.");
     setUser(null);
-    navigate("/sign_in");
+    setLeftTime(null);
     localStorage.clear();
+    navigate("/sign_in");
+  };
+
+  const RemainingTime = () => {
+    const tokenTime = localStorage.getItem("tokenTime");
+    if (!tokenTime) return;
+
+    const at = new Date(tokenTime).getTime();
+    const time = at + 30 * 60 * 1000;
+    const now = new Date().getTime();
+    const leftTime = time - now;
+    setLeftTime(leftTime > 0 ? leftTime : 0);
   };
 
   useEffect(() => {
@@ -91,6 +104,10 @@ export default function Layout() {
               nickname: userInfo.nickname,
               avatar: userInfo.avatar,
             });
+
+            RemainingTime();
+            const interval = setInterval(RemainingTime, 1000);
+            return () => clearInterval(interval);
           } else {
             handleLogout();
           }
@@ -105,7 +122,13 @@ export default function Layout() {
     } else {
       setLoading(false);
     }
-  }, []);
+  }, [setUser]);
+
+  useEffect(() => {
+    if (leftTime === 0) {
+      handleLogout();
+    }
+  }, [leftTime]);
 
   if (loading) {
     return <div>Loading...</div>;
@@ -118,6 +141,12 @@ export default function Layout() {
           <NavItem to="/">HOME</NavItem>
           <NavItem to="/profile">내 프로필</NavItem>
         </NavItems>
+        {leftTime !== null && leftTime > 0 ? (
+          <div>
+            계정 남은 시간 : {Math.floor(leftTime / 60000)}분{" "}
+            {Math.floor((leftTime % 60000) / 1000)}초
+          </div>
+        ) : null}
         <UserProfile>
           {user && (
             <>

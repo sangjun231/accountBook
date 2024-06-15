@@ -141,7 +141,7 @@ export default function Detail() {
       <InputGroup>
         <label htmlFor="date">날짜</label>
         <input
-          type="text"
+          type="date"
           id="date"
           value={date}
           onChange={(e) => setDate(e.target.value)}
