@@ -1,14 +1,9 @@
-import { Navigate } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
 import userStore from "../zustand/userStore";
 
-const PublicRoute = ({ element }) => {
+const PublicRoute = () => {
   const { user } = userStore();
-
-  return !user ? element : <Navigate to="/" />;
-
-  //   const { user } = userStore();
-
-  //   return user ? <Navigate to="/" /> : <Outlet />;
+  return !user ? <Outlet /> : <Navigate to="/" />;
 };
 
 export default PublicRoute;

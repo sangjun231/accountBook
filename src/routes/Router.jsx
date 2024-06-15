@@ -13,42 +13,19 @@ const Router = () => {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Layout />}>
-          <Route index element={<PrivateRoute element={<Home />} />} />
-          <Route
-            path="/detail/:id"
-            element={<PrivateRoute element={<Detail />} />}
-          />
-          <Route
-            path="/profile"
-            element={<PrivateRoute element={<Profile />} />}
-          />
-          <Route
-            path="/sign_in"
-            element={<PublicRoute element={<SignIn />} />}
-          />
-          <Route
-            path="/sign_up"
-            element={<PublicRoute element={<SignUp />} />}
-          />
+          <Route element={<PrivateRoute />}>
+            <Route index element={<Home />} />
+            <Route path="detail/:id" element={<Detail />} />
+            <Route path="profile" element={<Profile />} />
+          </Route>
+          <Route element={<PublicRoute />}>
+            <Route path="sign_in" element={<SignIn />} />
+            <Route path="sign_up" element={<SignUp />} />
+          </Route>
         </Route>
       </Routes>
     </BrowserRouter>
   );
-  // <BrowserRouter>
-  //   <Routes>
-  //     <Route path="/"  element={<PrivateRoute />}>
-
-  //         <Route index element={<Home />} />
-  //         <Route path="detail/:id" element={<Detail />} />
-  //         <Route path="profile" element={<Profile />} />
-
-  //     </Route>
-  //     <Route element={<PublicRoute />}>
-  //       <Route path="/sign_in" element={<SignIn />} />
-  //       <Route path="/sign_up" element={<SignUp />} />
-  //     </Route>
-  //   </Routes>
-  // </BrowserRouter>;
 };
 
 export default Router;
