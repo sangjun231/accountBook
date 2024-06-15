@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { updateProfile } from "../lib/api/auth";
 import { useNavigate } from "react-router-dom";
@@ -40,10 +40,11 @@ const Button = styled.button`
 `;
 
 export default function Profile() {
+  const { user, setUser } = userStore();
   const [nickname, setNickname] = useState("");
   const [avatar, setAvatar] = useState(null);
   const [avatarPreview, setAvatarPreview] = useState(null);
-  const { user, setUser } = userStore();
+
   const navigate = useNavigate();
 
   const handleUpdateProfile = async () => {
@@ -80,6 +81,13 @@ export default function Profile() {
     setAvatarPreview(URL.createObjectURL(imgFile));
   };
 
+  useEffect(() => {
+    if (user) {
+      setNickname(user.nickname || "");
+      setAvatarPreview(user.avatar || null);
+    }
+  }, [user]);
+
   return (
     <Container>
       <h2 className="mb-4">프로필 수정</h2>
@@ -87,7 +95,8 @@ export default function Profile() {
         <label htmlFor="nickname">닉네임</label>
         <input
           type="text"
-          placeholder="닉네임"
+          placeholder={nickname}
+          value={nickname}
           minLength="1"
           maxLength="10"
           onChange={(e) => setNickname(e.target.value)}
