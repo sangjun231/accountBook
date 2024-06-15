@@ -35,7 +35,7 @@ const MonthButton = styled.button`
   }
 `;
 
-const MONTHS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+const MONTHS = Array.from({ length: 12 }, (_, i) => i + 1);
 
 export default function MonthNavigation() {
   const { selectedMonth, setSelectedMonth } = userStore();
