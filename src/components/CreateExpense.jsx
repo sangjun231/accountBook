@@ -69,7 +69,11 @@ export default function CreateExpense() {
 
     const parsedAmount = parseInt(newAmount, 10);
     if (!newItem || !parsedAmount || !newDescription) {
-      toast.error("유효한 항목, 금액, 내용을 입력해주세요.");
+      if (!toast.isActive("addError")) {
+        toast.error("유효한 항목, 금액, 내용을 입력해주세요.", {
+          toastId: "addError",
+        });
+      }
       return;
     }
 

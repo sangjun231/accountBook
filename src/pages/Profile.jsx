@@ -39,14 +39,6 @@ const Button = styled.button`
   margin-bottom: 10px;
 `;
 
-const ImagePreview = styled.img`
-  width: 100px;
-  height: 100px;
-  object-fit: cover;
-  border-radius: 50%;
-  margin-top: 10px;
-`;
-
 export default function Profile() {
   const [nickname, setNickname] = useState("");
   const [avatar, setAvatar] = useState(null);
@@ -56,7 +48,11 @@ export default function Profile() {
 
   const handleUpdateProfile = async () => {
     if (!nickname || !avatar) {
-      toast.error("닉네임과 아바타를 수정하고 업데이트 해주세요!");
+      if (!toast.isActive("updateError")) {
+        toast.error("닉네임과 아바타를 수정하고 업데이트 해주세요!", {
+          toastId: "updatedError",
+        });
+      }
       return;
     }
 
@@ -114,9 +110,7 @@ export default function Profile() {
       <h2 className="text-xl">아바타 미리보기</h2>
       {avatarPreview && (
         <img
-          className="
-          w-32 h-32 rounded-full items-center
-          "
+          className="w-32 h-32 rounded-full items-center"
           src={avatarPreview}
           alt="아바타 미리보기"
         />
