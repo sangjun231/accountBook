@@ -62,8 +62,15 @@ const BackButton = styled(Button)`
 `;
 
 export default function Detail() {
+  const [date, setDate] = useState("");
+  const [item, setItem] = useState("");
+  const [amount, setAmount] = useState("");
+  const [description, setDescription] = useState("");
+  const { user } = userStore();
+  const queryClient = useQueryClient();
   const navigate = useNavigate();
   const { id } = useParams();
+
   const {
     data: selectedExpense,
     isLoading,
@@ -72,13 +79,6 @@ export default function Detail() {
     queryKey: ["expenses", id],
     queryFn: getExpense,
   });
-
-  const [date, setDate] = useState("");
-  const [item, setItem] = useState("");
-  const [amount, setAmount] = useState("");
-  const [description, setDescription] = useState("");
-  const { user } = userStore();
-  const queryClient = useQueryClient();
 
   const mutationEdit = useMutation({
     mutationFn: putExpense,

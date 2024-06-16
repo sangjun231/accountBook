@@ -6,6 +6,7 @@ import { postExpense } from "../lib/api/expense";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import userStore from "../zustand/userStore";
 import { toast } from "react-toastify";
+import monthStore from "../zustand/monthStore";
 
 const InputRow = styled.div`
   display: flex;
@@ -54,7 +55,8 @@ export default function CreateExpense() {
   const [newItem, setNewItem] = useState("");
   const [newAmount, setNewAmount] = useState("");
   const [newDescription, setNewDescription] = useState("");
-  const { user, selectedMonth } = userStore();
+  const { user } = userStore();
+  const { selectedMonth } = monthStore();
   const queryClient = useQueryClient();
 
   const mutation = useMutation({

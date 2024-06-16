@@ -5,6 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import { getExpenses } from "../lib/api/expense";
 import userStore from "./../zustand/userStore";
 import { toast } from "react-toastify";
+import monthStore from "../zustand/monthStore";
 
 const ExpenseItemList = styled.div`
   display: flex;
@@ -66,7 +67,8 @@ const ExpenseDetails = styled.div`
 
 export default function ExpenseList() {
   const navigate = useNavigate();
-  const { user, selectedMonth } = userStore();
+  const { user } = userStore();
+  const { selectedMonth } = monthStore();
 
   const {
     data: expenses = [],

@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { Section } from "../pages/Home";
 import userStore from "../zustand/userStore";
+import monthStore from "../zustand/monthStore";
 
 const MonthButton = styled.button`
   text-align: center;
@@ -38,7 +39,7 @@ const MonthButton = styled.button`
 const MONTHS = Array.from({ length: 12 }, (_, i) => i + 1);
 
 export default function MonthNavigation() {
-  const { selectedMonth, setSelectedMonth } = userStore();
+  const { selectedMonth, setSelectedMonth } = monthStore();
 
   return (
     <Section>
