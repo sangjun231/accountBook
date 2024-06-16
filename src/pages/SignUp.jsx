@@ -1,56 +1,14 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import styled from "styled-components";
 import { register } from "../lib/api/auth";
 import { toast } from "react-toastify";
-
-const Container = styled.div`
-  max-width: 400px;
-  margin: 0 auto;
-  padding: 20px;
-  background-color: #f8f9fa;
-  border-radius: 8px;
-`;
-
-const InputGroup = styled.div`
-  margin-bottom: 15px;
-
-  label {
-    display: block;
-    margin-bottom: 5px;
-  }
-
-  input {
-    width: 100%;
-    padding: 8px;
-    box-sizing: border-box;
-  }
-`;
-
-const Button = styled.button`
-  width: 100%;
-  padding: 10px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  margin-bottom: 10px;
-
-  &:disabled {
-    background-color: #a0a0a0;
-  }
-`;
-
-const ToggleButton = styled.button`
-  width: 100%;
-  padding: 10px;
-  background-color: #6c757d;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-`;
+import {
+  InputGroup,
+  Label,
+  Input,
+  Button,
+  ToggleButton,
+} from "../components/atoms/Sign/signAtom";
 
 export default function SignUp() {
   const [id, setId] = useState("");
@@ -80,10 +38,10 @@ export default function SignUp() {
   };
 
   return (
-    <Container>
+    <div className="max-w-sm my-0 mx-auto p-4 bg-slate-100 rounded-md">
       <InputGroup>
-        <label htmlFor="id">아이디</label>
-        <input
+        <Label htmlFor="id">아이디</Label>
+        <Input
           type="text"
           value={id}
           onChange={(e) => setId(e.target.value)}
@@ -91,8 +49,8 @@ export default function SignUp() {
         />
       </InputGroup>
       <InputGroup>
-        <label htmlFor="password">비밀번호</label>
-        <input
+        <Label htmlFor="password">비밀번호</Label>
+        <Input
           type="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
@@ -100,8 +58,8 @@ export default function SignUp() {
         />
       </InputGroup>
       <InputGroup>
-        <label htmlFor="nickname">닉네임</label>
-        <input
+        <Label htmlFor="nickname">닉네임</Label>
+        <Input
           type="text"
           value={nickname}
           onChange={(e) => setNickname(e.target.value)}
@@ -116,6 +74,6 @@ export default function SignUp() {
       >
         돌아가기
       </ToggleButton>
-    </Container>
+    </div>
   );
 }

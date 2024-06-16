@@ -1,57 +1,15 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import styled from "styled-components";
-import { login } from "../lib/api/auth";
-import userStore from "../zustand/userStore";
 import { toast } from "react-toastify";
-
-const Container = styled.div`
-  max-width: 400px;
-  margin: 0 auto;
-  padding: 20px;
-  background-color: #f8f9fa;
-  border-radius: 8px;
-`;
-
-const InputGroup = styled.div`
-  margin-bottom: 15px;
-
-  label {
-    display: block;
-    margin-bottom: 5px;
-  }
-
-  input {
-    width: 100%;
-    padding: 8px;
-    box-sizing: border-box;
-  }
-`;
-
-const Button = styled.button`
-  width: 100%;
-  padding: 10px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  margin-bottom: 10px;
-
-  &:disabled {
-    background-color: #a0a0a0;
-  }
-`;
-
-const ToggleButton = styled.button`
-  width: 100%;
-  padding: 10px;
-  background-color: #6c757d;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-`;
+import userStore from "../zustand/userStore";
+import { login } from "../lib/api/auth";
+import {
+  InputGroup,
+  Label,
+  Input,
+  Button,
+  ToggleButton,
+} from "../components/atoms/Sign/signAtom";
 
 export default function SignIn() {
   const [id, setId] = useState("");
@@ -60,6 +18,14 @@ export default function SignIn() {
   const navigate = useNavigate();
 
   const handleSignIn = async () => {
+    if (!id || !password) {
+      if (!toast.isActive("signInError")) {
+        toast.error("아이디와 비밀번호를 모두 입력해주세요.", {
+          toastId: "signInError",
+        });
+      }
+      return;
+    }
     const { userId, nickname, avatar } = await login({
       id,
       password,
@@ -70,18 +36,18 @@ export default function SignIn() {
   };
 
   return (
-    <Container>
+    <div className="max-w-sm my-0 mx-auto p-4 bg-slate-100 rounded-md">
       <InputGroup>
-        <label htmlFor="id">아이디</label>
-        <input
+        <Label htmlFor="id">아이디</Label>
+        <Input
           type="text"
           onChange={(e) => setId(e.target.value)}
           placeholder="아이디"
         />
       </InputGroup>
       <InputGroup>
-        <label htmlFor="password">비밀번호</label>
-        <input
+        <Label htmlFor="password">비밀번호</Label>
+        <Input
           type="password"
           onChange={(e) => setPassword(e.target.value)}
           placeholder="비밀번호"
@@ -95,6 +61,6 @@ export default function SignIn() {
       >
         회원가입
       </ToggleButton>
-    </Container>
+    </div>
   );
 }
