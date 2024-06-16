@@ -5,39 +5,12 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { getExpense, putExpense, deleteExpense } from "../lib/api/expense";
 import userStore from "../zustand/userStore";
 import { toast } from "react-toastify";
-
-const Container = styled.div`
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 20px;
-  background-color: #ffffff;
-  border-radius: 16px;
-`;
-
-const InputGroup = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 10px;
-
-  label {
-    margin-bottom: 5px;
-    font-size: 14px;
-    color: #333;
-    text-align: left;
-  }
-
-  input {
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    font-size: 14px;
-  }
-`;
-
-const ButtonGroup = styled.div`
-  display: flex;
-  gap: 10px;
-`;
+import {
+  InputGroup,
+  Label,
+  Input,
+  Container,
+} from "../components/atoms/Sign/signAtom";
 
 const Button = styled.button`
   padding: 10px 20px;
@@ -50,14 +23,6 @@ const Button = styled.button`
 
   &:hover {
     background-color: ${(props) => (props.danger ? "#cc0000" : "#0056b3")};
-  }
-`;
-
-const BackButton = styled(Button)`
-  background-color: #6c757d;
-
-  &:hover {
-    background-color: #5a6268;
   }
 `;
 
@@ -139,8 +104,8 @@ export default function Detail() {
   return (
     <Container>
       <InputGroup>
-        <label htmlFor="date">날짜</label>
-        <input
+        <Label htmlFor="date">날짜</Label>
+        <Input
           type="date"
           id="date"
           value={date}
@@ -149,8 +114,8 @@ export default function Detail() {
         />
       </InputGroup>
       <InputGroup>
-        <label htmlFor="item">항목</label>
-        <input
+        <Label htmlFor="item">항목</Label>
+        <Input
           type="text"
           id="item"
           value={item}
@@ -159,8 +124,8 @@ export default function Detail() {
         />
       </InputGroup>
       <InputGroup>
-        <label htmlFor="amount">금액</label>
-        <input
+        <Label htmlFor="amount">금액</Label>
+        <Input
           type="number"
           id="amount"
           value={amount}
@@ -169,8 +134,8 @@ export default function Detail() {
         />
       </InputGroup>
       <InputGroup>
-        <label htmlFor="description">내용</label>
-        <input
+        <Label htmlFor="description">내용</Label>
+        <Input
           type="text"
           id="description"
           value={description}
@@ -178,13 +143,18 @@ export default function Detail() {
           placeholder="지출 내용"
         />
       </InputGroup>
-      <ButtonGroup>
+      <div className="flex justify-around">
         <Button onClick={editExpense}>수정</Button>
         <Button danger="true" onClick={handleDelete}>
           삭제
         </Button>
-        <BackButton onClick={() => navigate(-1)}>뒤로 가기</BackButton>
-      </ButtonGroup>
+        <button
+          onClick={() => navigate(-1)}
+          className="bg-gray-600 hover:bg-gray-500 text-white py-2 px-4 rounded"
+        >
+          뒤로 가기
+        </button>
+      </div>
     </Container>
   );
 }

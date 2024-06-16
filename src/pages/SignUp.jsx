@@ -8,6 +8,7 @@ import {
   Input,
   Button,
   ToggleButton,
+  Container,
 } from "../components/atoms/Sign/signAtom";
 
 export default function SignUp() {
@@ -50,7 +51,7 @@ export default function SignUp() {
   };
 
   return (
-    <div className="max-w-sm my-0 mx-auto p-4 bg-slate-100 rounded-md">
+    <Container>
       <InputGroup>
         <Label htmlFor="id">아이디</Label>
         <Input
@@ -86,6 +87,6 @@ export default function SignUp() {
       >
         돌아가기
       </ToggleButton>
-    </div>
+    </Container>
   );
 }

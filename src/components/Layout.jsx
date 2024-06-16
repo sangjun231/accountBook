@@ -19,60 +19,22 @@ const Navbar = styled.nav`
   max-width: 1240px;
 `;
 
-const NavItems = styled.div`
-  display: flex;
-  align-items: center;
-`;
-
-const NavItem = styled(Link)`
-  color: white;
-  margin: 0 10px;
-  text-decoration: none;
-
-  &:hover {
-    text-decoration: underline;
-  }
-`;
-
-const UserProfile = styled.div`
-  display: flex;
-  align-items: center;
-`;
-
-const UserAvatar = styled.img`
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  margin-right: 10px;
-`;
-
-const UserName = styled.span`
-  color: white;
-  margin-right: 20px;
-`;
-
-const LogoutButton = styled.button`
-  padding: 8px 12px;
-  background-color: #ff4d4d;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-
-  &:hover {
-    background-color: #cc0000;
-  }
-`;
-
-const PageContainer = styled.div`
-  padding: 6rem 2rem;
-`;
+function NavItem({ to, children }) {
+  return (
+    <Link to={to} className="text-white mx-2 no-underline hover:underline">
+      {children}
+    </Link>
+  );
+}
 
 export default function Layout() {
   const { user, setUser } = userStore();
   const [loading, setLoading] = useState(true);
   const [leftTime, setLeftTime] = useState(null);
   const navigate = useNavigate();
+
+  const mathMinute = Math.floor(leftTime / 60000);
+  const mathSecond = Math.floor((leftTime % 60000) / 1000);
 
   const handleLogout = () => {
     toast.success("로그아웃 되었습니다.");
@@ -93,6 +55,10 @@ export default function Layout() {
     setLeftTime(leftTime > 0 ? leftTime : 0);
   };
 
+  // 첫 로그인 시 남은 시간이 안나옴 하지만 로그 아웃 시 잘 사라졌다가
+  // 재 로그인 시 남은 시간이 다시 잘나옴...순서 문제 같은데 잘 모르겠음..
+  // useEffect자체가 첫 로그인 시 작동을 안함 (콘솔로그 안나옴)
+  // 로그아웃 후 새로고침하고 재 로그인 시 위 과정 반복
   useEffect(() => {
     const token = localStorage.getItem("accessToken");
     if (token) {
@@ -124,12 +90,6 @@ export default function Layout() {
     }
   }, [setUser]);
 
-  useEffect(() => {
-    if (leftTime === 0) {
-      handleLogout();
-    }
-  }, [leftTime]);
-
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -137,29 +97,35 @@ export default function Layout() {
   return (
     <>
       <Navbar>
-        <NavItems>
+        <div className="flex align-center">
           <NavItem to="/">HOME</NavItem>
           <NavItem to="/profile">내 프로필</NavItem>
-        </NavItems>
+        </div>
         {leftTime !== null && leftTime > 0 ? (
-          <div>
-            계정 남은 시간 : {Math.floor(leftTime / 60000)}분{" "}
-            {Math.floor((leftTime % 60000) / 1000)}초
-          </div>
+          <div>{`계정 남은 시간 : ${mathMinute}분 ${mathSecond}초`}</div>
         ) : null}
-        <UserProfile>
+        <div className="flex items-center">
           {user && (
             <>
-              <UserAvatar src={user.avatar} alt="User Avatar" />
-              <UserName>{user.nickname}</UserName>
-              <LogoutButton onClick={handleLogout}>로그아웃</LogoutButton>
+              <img
+                src={user.avatar}
+                alt="User Avatar"
+                className="w-10 h-10 rounded-full mr-2"
+              />
+              <span className="text-white mr-4">{user.nickname}</span>
+              <button
+                onClick={handleLogout}
+                className="px-3 py-2 bg-red-500 text-white border-none rounded cursor-pointer hover:bg-red-700"
+              >
+                로그아웃
+              </button>
             </>
           )}
-        </UserProfile>
+        </div>
       </Navbar>
-      <PageContainer>
+      <div className="py-24 px-8">
         <Outlet />
-      </PageContainer>
+      </div>
     </>
   );
 }

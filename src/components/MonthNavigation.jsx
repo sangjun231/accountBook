@@ -1,7 +1,6 @@
 import styled from "styled-components";
-import { Section } from "../pages/Home";
-import userStore from "../zustand/userStore";
 import monthStore from "../zustand/monthStore";
+import { Section } from "./atoms/Sign/signAtom";
 
 const MonthButton = styled.button`
   text-align: center;

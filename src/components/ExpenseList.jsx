@@ -1,4 +1,3 @@
-import { Section } from "../pages/Home";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
@@ -6,6 +5,7 @@ import { getExpenses } from "../lib/api/expense";
 import userStore from "./../zustand/userStore";
 import { toast } from "react-toastify";
 import monthStore from "../zustand/monthStore";
+import { Section } from "./atoms/Sign/signAtom";
 
 const ExpenseItemList = styled.div`
   display: flex;

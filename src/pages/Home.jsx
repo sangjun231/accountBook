@@ -1,22 +1,6 @@
-import styled from "styled-components";
 import MonthNavigation from "../components/MonthNavigation";
 import ExpenseList from "../components/ExpenseList";
 import CreateExpense from "../components/CreateExpense";
-
-const Container = styled.main`
-  max-width: 800px;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  margin: 0 auto;
-`;
-
-export const Section = styled.section`
-  background-color: #ffffff;
-  border-radius: 16px;
-  padding: 20px;
-`;
 
 // 테일윈드 예시
 // function Container({ children }) {
@@ -27,10 +11,10 @@ export const Section = styled.section`
 
 export default function Home() {
   return (
-    <Container>
+    <main className="max-w-3xl w-full flex flex-col gap-5 mx-auto">
       <MonthNavigation />
       <CreateExpense />
       <ExpenseList />
-    </Container>
+    </main>
   );
 }

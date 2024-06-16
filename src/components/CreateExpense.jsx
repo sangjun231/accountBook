@@ -1,4 +1,3 @@
-import { Section } from "../pages/Home";
 import styled from "styled-components";
 import { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
@@ -7,6 +6,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import userStore from "../zustand/userStore";
 import { toast } from "react-toastify";
 import monthStore from "../zustand/monthStore";
+import { Section } from "./atoms/Sign/signAtom";
 
 const InputRow = styled.div`
   display: flex;
