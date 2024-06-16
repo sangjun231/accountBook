@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
-import styled from "styled-components";
 import { useNavigate, useParams } from "react-router-dom";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { getExpense, putExpense, deleteExpense } from "../lib/api/expense";
 import userStore from "../zustand/userStore";
+import { getExpense, putExpense, deleteExpense } from "../lib/api/expense";
 import { toast } from "react-toastify";
 import {
   InputGroup,
@@ -12,19 +11,21 @@ import {
   Container,
 } from "../components/atoms/Sign/signAtom";
 
-const Button = styled.button`
-  padding: 10px 20px;
-  background-color: ${(props) => (props.danger ? "#ff4d4d" : "#007bff")};
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.2s ease-in-out;
-
-  &:hover {
-    background-color: ${(props) => (props.danger ? "#cc0000" : "#0056b3")};
-  }
-`;
+const DetailButton = ({ $danger, children, ...props }) => {
+  return (
+    <button
+      className={`px-4 py-2 text-white rounded cursor-pointer transition-colors ease-in-out
+        ${
+          $danger
+            ? "bg-red-500 hover:bg-red-700"
+            : "bg-blue-500 hover:bg-blue-700"
+        }`}
+      {...props}
+    >
+      {children}
+    </button>
+  );
+};
 
 export default function Detail() {
   const [date, setDate] = useState("");
@@ -144,10 +145,10 @@ export default function Detail() {
         />
       </InputGroup>
       <div className="flex justify-around">
-        <Button onClick={editExpense}>수정</Button>
-        <Button danger="true" onClick={handleDelete}>
+        <DetailButton onClick={editExpense}>수정</DetailButton>
+        <DetailButton $danger="true" onClick={handleDelete}>
           삭제
-        </Button>
+        </DetailButton>
         <button
           onClick={() => navigate(-1)}
           className="bg-gray-600 hover:bg-gray-500 text-white py-2 px-4 rounded"

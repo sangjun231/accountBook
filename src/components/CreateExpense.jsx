@@ -8,13 +8,6 @@ import { toast } from "react-toastify";
 import monthStore from "../zustand/monthStore";
 import { Section } from "./atoms/Sign/signAtom";
 
-const InputRow = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  align-items: flex-end;
-`;
-
 const InputGroupInline = styled.div`
   display: flex;
   flex-direction: column;
@@ -103,7 +96,7 @@ export default function CreateExpense() {
   return (
     <Section>
       <form onSubmit={handleAddExpense}>
-        <InputRow>
+        <div className="flex flex-wrap gap-3 items-end">
           <InputGroupInline>
             <label htmlFor="date">날짜</label>
             <input
@@ -144,7 +137,7 @@ export default function CreateExpense() {
             />
           </InputGroupInline>
           <AddButton type="submit">저장</AddButton>
-        </InputRow>
+        </div>
       </form>
     </Section>
   );

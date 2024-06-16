@@ -7,12 +7,6 @@ import { toast } from "react-toastify";
 import monthStore from "../zustand/monthStore";
 import { Section } from "./atoms/Sign/signAtom";
 
-const ExpenseItemList = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-`;
-
 const ExpenseItem = styled.div`
   display: flex;
   justify-content: space-between;
@@ -93,7 +87,7 @@ export default function ExpenseList() {
 
   return (
     <Section>
-      <ExpenseItemList>
+      <div className="flex flex-col gap-3">
         {filteredExpenses.map((expense) => (
           <ExpenseItem
             key={expense.id}
@@ -108,7 +102,7 @@ export default function ExpenseList() {
             <span>{expense.amount.toLocaleString()} 원</span>
           </ExpenseItem>
         ))}
-      </ExpenseItemList>
+      </div>
     </Section>
   );
 }
