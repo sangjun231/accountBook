@@ -18,15 +18,27 @@ export default function SignUp() {
 
   const handleSignIn = async () => {
     if (id.length < 4 || id.length > 10) {
-      toast.error("아이디는 4글자에서 10글자 이내로 입력해주세요!");
+      if (!toast.isActive("idError")) {
+        toast.error("아이디는 4글자에서 10글자 이내로 입력해주세요!", {
+          toastId: "idError",
+        });
+      }
       return;
     }
     if (password.length < 4 || password.length > 15) {
-      toast.error("패스워드는 4글자에서 15글자 이내로 입력해주세요!");
+      if (!toast.isActive("passwordError")) {
+        toast.error("패스워드는 4글자에서 15글자 이내로 입력해주세요!", {
+          toastId: "passwordError",
+        });
+      }
       return;
     }
     if (nickname.length < 1 || nickname > 10) {
-      toast.error("닉네임은 1글자에서 10글자 이내로 입력해주세요!");
+      if (!toast.isActive("nicknameError")) {
+        toast.error("닉네임은 1글자에서 10글자 이내로 입력해주세요!", {
+          toastId: "nicknameError",
+        });
+      }
       return;
     }
     const response = await register({ id, password, nickname });
